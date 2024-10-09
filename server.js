@@ -9,11 +9,7 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors({
-  origin: 'http://localhost:3002', // Allow requests from your frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-  credentials: true // Allow credentials if needed
-}));
+app.use(cors()); // Allow all origins
 app.use(express.json());
 
 // Routes

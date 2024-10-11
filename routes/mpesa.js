@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const Team = require('../models/teams');
+const authMiddleware = require('../middleware/authMiddleware');
 
+router.use(authMiddleware);
 // Utility function to generate timestamp
 function getTimestamp() {
   const date = new Date();

@@ -2,6 +2,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const authMiddleware = require('../middleware/authMiddleware');
+
+router.use(authMiddleware);
 
 // Get all users
 router.get('/users', async (req, res) => {

@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Team = require('../models/teams');
+const authMiddleware = require('../middleware/authMiddleware');
+
+router.use(authMiddleware);
 
 // Endpoint to create a new team
 router.post('/add', async (req, res) => {

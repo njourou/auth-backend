@@ -18,6 +18,9 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/teams', require('./routes/teams'));
 app.use('/api/players', require('./routes/players'));
 app.use('/api/mpesa', require('./routes/mpesa'));
+app.use('/api/tickets', require('./routes/ticketRoutes'));
+app.use('/api/jerseys', require('./routes/jerseys'));
+app.use('/uploads', express.static('uploads'));
 
 
 const PORT = process.env.PORT || 5000;

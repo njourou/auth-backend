@@ -23,11 +23,15 @@ function generatePassword(shortcode, passkey, timestamp) {
   return Buffer.from(data).toString('base64');
 }
 
-// Endpoint to initiate M-Pesa STK Push for a team
-router.post('/stk/:teamId', async (req, res) => {
+router.post('/stk', async (req, res) => {
   try {
     const { teamId } = req.params;
-    const { phoneNumber } = req.body;
+    const { phoneNumber, amount } = req.body;
+
+    // Validate amount
+    if (!amount || isNaN(amount) || amount <= 0) {
+      return res.status(400).json({ message: 'Invalid amount specified' });
+    }
 
     // Fetch team details
     const team = await Team.findById(teamId);
@@ -65,12 +69,12 @@ router.post('/stk/:teamId', async (req, res) => {
       Password: password,
       Timestamp: timestamp,
       TransactionType: 'CustomerPayBillOnline',
-      Amount: team.amount,
+      Amount: amount, // Use dynamic amount from request
       PartyA: phoneNumber,
       PartyB: shortcode,
       PhoneNumber: phoneNumber,
       CallBackURL: callbackUrl,
-      AccountReference: team.name,
+      AccountReference: 'Kipaji-Online', // Fixed account reference
       TransactionDesc: `Payment for ${team.name}`,
     };
 
@@ -99,6 +103,7 @@ router.post('/stk/:teamId', async (req, res) => {
     });
   }
 });
+
 
 // Callback URL endpoint to handle M-Pesa response
 router.post('/callback', async (req, res) => {

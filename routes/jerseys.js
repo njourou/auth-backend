@@ -27,6 +27,7 @@ router.post('/add', upload.single('image'), async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const jerseys = await Jersey.find();
+        console.log('Retrieved Jerseys:', jerseys);
         res.status(200).json(jerseys);
     } catch (error) {
         res.status(500).json({ message: error.message });
